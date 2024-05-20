@@ -1,7 +1,9 @@
 com/bibliotheque/gestionbibliotheque/services/livreService.class
 com/bibliotheque/gestionbibliotheque/GestionbibliothequeApplication.class
 com/bibliotheque/gestionbibliotheque/Repository/livreRepository.class
+com/bibliotheque/gestionbibliotheque/Config/WebConfig.class
 com/bibliotheque/gestionbibliotheque/Repository/bibliothecaireRepository.class
+com/bibliotheque/gestionbibliotheque/Config/WebConfig$1.class
 com/bibliotheque/gestionbibliotheque/services/bibliothecaireService.class
 com/bibliotheque/gestionbibliotheque/entities/adherent.class
 com/bibliotheque/gestionbibliotheque/entities/bibliothecaire.class

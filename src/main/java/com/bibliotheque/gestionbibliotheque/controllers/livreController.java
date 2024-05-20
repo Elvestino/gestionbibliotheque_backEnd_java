@@ -20,7 +20,7 @@ public class livreController {
 
     @PostMapping("/save")
     public livre createLivre(@RequestBody livre livre) {
-        System.out.println("data tonga :" + livre);
+
         return livreService.saveLivre(livre);
     }
 

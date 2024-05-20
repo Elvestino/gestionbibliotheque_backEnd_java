@@ -17,7 +17,7 @@ public class bibliothecaireController {
     @Autowired
     private bibliothecaireService bibliothecaireService;
 
-    @PostMapping
+    @PostMapping("/save")
     public bibliothecaire createbibliothecaire(@RequestBody bibliothecaire bibliothecaire) {
         System.out.println("data : " + bibliothecaire);
         return bibliothecaireService.saveBiblio(bibliothecaire);
