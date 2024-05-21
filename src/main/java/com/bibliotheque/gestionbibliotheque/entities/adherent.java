@@ -2,11 +2,13 @@ package com.bibliotheque.gestionbibliotheque.entities;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import lombok.*;
@@ -27,5 +29,8 @@ public class adherent implements Serializable {
     private String adrs_Adh;
     private String categorie;
     private String tel_Adh;
+
+    @OneToMany(mappedBy = "adherent")
+    private Set<Emprunt> emprunts;
 
 }

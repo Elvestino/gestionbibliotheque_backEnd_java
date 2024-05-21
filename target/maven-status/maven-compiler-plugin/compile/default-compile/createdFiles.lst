@@ -3,13 +3,14 @@ com/bibliotheque/gestionbibliotheque/GestionbibliothequeApplication.class
 com/bibliotheque/gestionbibliotheque/Repository/livreRepository.class
 com/bibliotheque/gestionbibliotheque/Config/WebConfig.class
 com/bibliotheque/gestionbibliotheque/Repository/bibliothecaireRepository.class
-com/bibliotheque/gestionbibliotheque/Config/WebConfig$1.class
 com/bibliotheque/gestionbibliotheque/services/bibliothecaireService.class
 com/bibliotheque/gestionbibliotheque/entities/adherent.class
 com/bibliotheque/gestionbibliotheque/entities/bibliothecaire.class
 com/bibliotheque/gestionbibliotheque/services/adherentService.class
+com/bibliotheque/gestionbibliotheque/entities/Emprunt.class
 com/bibliotheque/gestionbibliotheque/controllers/livreController.class
 com/bibliotheque/gestionbibliotheque/Repository/adherentRepository.class
 com/bibliotheque/gestionbibliotheque/entities/livre.class
 com/bibliotheque/gestionbibliotheque/controllers/adherentController.class
 com/bibliotheque/gestionbibliotheque/controllers/bibliothecaireController.class
+com/bibliotheque/gestionbibliotheque/Config/AppConfig.class
