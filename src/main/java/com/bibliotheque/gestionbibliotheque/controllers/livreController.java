@@ -1,6 +1,7 @@
 package com.bibliotheque.gestionbibliotheque.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,8 +26,8 @@ public class livreController {
     }
 
     @GetMapping("/{id}")
-    public livre getLivreById(@PathVariable Long id) {
-        return livreService.findLivreById(id);
+    public Optional<livre> getLivreById(@PathVariable Long id) {
+        return livreService.findById(id);
     }
 
     @PutMapping("/{id}")

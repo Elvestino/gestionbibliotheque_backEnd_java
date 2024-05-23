@@ -1,6 +1,7 @@
 package com.bibliotheque.gestionbibliotheque.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,8 +18,8 @@ public class livreService {
         return livreRepository.save(livre);
     }
 
-    public livre findLivreById(Long id) {
-        return livreRepository.findById(id).orElse(null);
+    public Optional<livre> findById(Long id) {
+        return livreRepository.findById(id);
     }
 
     public livre updateLivre(livre livre) {

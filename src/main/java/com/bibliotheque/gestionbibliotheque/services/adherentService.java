@@ -1,6 +1,7 @@
 package com.bibliotheque.gestionbibliotheque.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,8 +19,8 @@ public class adherentService {
         return adherentRepository.save(adherent);
     }
 
-    public adherent findBiblioById(Long id) {
-        return adherentRepository.findById(id).orElse(null);
+    public Optional<adherent> findById(Long id) {
+        return adherentRepository.findById(id);
     }
 
     public adherent updateBiblio(adherent adherent) {

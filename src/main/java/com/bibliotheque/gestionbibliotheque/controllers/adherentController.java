@@ -1,6 +1,7 @@
 package com.bibliotheque.gestionbibliotheque.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -23,8 +24,8 @@ public class adherentController {
     }
 
     @GetMapping("/{id}")
-    public adherent getadherentById(@PathVariable Long id) {
-        return adherentService.findBiblioById(id);
+    public Optional<adherent> getadherentById(@PathVariable Long id) {
+        return adherentService.findById(id);
     }
 
     @PutMapping("/{id}")

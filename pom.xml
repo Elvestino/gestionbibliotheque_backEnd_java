@@ -50,6 +50,12 @@
     		<artifactId>spring-boot-starter-security</artifactId>
 		</dependency> -->
 
+		<!-- SCANNER -->
+		<dependency>
+			<groupId>net.sourceforge.tess4j</groupId>
+			<artifactId>tess4j</artifactId>
+			<version>5.4.0</version> <!-- Vérifiez la dernière version sur le site de tess4j -->
+		</dependency>
     	<!-- THYMELEAF -->
 		<dependency>
         	<groupId>org.thymeleaf</groupId>

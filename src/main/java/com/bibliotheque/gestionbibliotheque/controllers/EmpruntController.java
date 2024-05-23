@@ -5,9 +5,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.bibliotheque.gestionbibliotheque.entities.Emprunt;
-import com.bibliotheque.gestionbibliotheque.services.EmpruntService;
+import com.bibliotheque.gestionbibliotheque.dto.EmpruntRequestDTO;
+import com.bibliotheque.gestionbibliotheque.entities.*;
+import com.bibliotheque.gestionbibliotheque.services.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,11 +17,21 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/emprunts")
 public class EmpruntController {
-    private final EmpruntService empruntService;
 
     @Autowired
-    public EmpruntController(EmpruntService empruntService) {
+    private EmpruntService empruntService;
+
+    @Autowired
+    private adherentService adherentService;
+
+    @Autowired
+    private livreService livreService;
+
+    public EmpruntController(EmpruntService empruntService, adherentService adherentService,
+            livreService livreService) {
         this.empruntService = empruntService;
+        this.adherentService = adherentService;
+        this.livreService = livreService;
     }
 
     @GetMapping
@@ -33,16 +45,43 @@ public class EmpruntController {
         return emprunt.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping
-    public ResponseEntity<Emprunt> createEmprunt(@RequestBody Emprunt emprunt) {
-        Emprunt createdEmprunt = empruntService.createEmprunt(emprunt);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdEmprunt);
+    @PostMapping("/save")
+    public ResponseEntity<Emprunt> createEmprunt(@RequestBody EmpruntRequestDTO empruntRequest) {
+        Optional<adherent> adherentOpt = adherentService.findById(empruntRequest.getAdherentId());
+        Optional<livre> livreOpt = livreService.findById(empruntRequest.getLivreId());
+
+        if (adherentOpt.isPresent() && livreOpt.isPresent()) {
+            Emprunt emprunt = new Emprunt();
+            emprunt.setAdherent(adherentOpt.get());
+            emprunt.setLivre(livreOpt.get());
+            emprunt.setJoursEmprunt(empruntRequest.getJoursEmprunt());
+
+            Emprunt createdEmprunt = empruntService.createEmprunt(emprunt);
+            return ResponseEntity.status(HttpStatus.CREATED).body(createdEmprunt);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PostMapping("/return/{id}")
+    public ResponseEntity<Emprunt> returnLivre(@PathVariable Long id) {
+        Emprunt updatedEmprunt = empruntService.returnLivre(id);
+        return ResponseEntity.ok(updatedEmprunt);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Emprunt> updateEmprunt(@PathVariable Long id, @RequestBody Emprunt updatedEmprunt) {
-        Emprunt emprunt = empruntService.updateEmprunt(id, updatedEmprunt);
-        return ResponseEntity.ok(emprunt);
+        Optional<adherent> adherent = adherentService.findById(updatedEmprunt.getAdherent().getId());
+        Optional<livre> livre = livreService.findById(updatedEmprunt.getLivre().getId());
+
+        if (adherent.isPresent() && livre.isPresent()) {
+            updatedEmprunt.setAdherent(adherent.get());
+            updatedEmprunt.setLivre(livre.get());
+            Emprunt emprunt = empruntService.updateEmprunt(id, updatedEmprunt);
+            return ResponseEntity.ok(emprunt);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @DeleteMapping("/{id}")
