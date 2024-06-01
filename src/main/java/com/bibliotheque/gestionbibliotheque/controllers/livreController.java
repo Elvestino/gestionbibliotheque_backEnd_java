@@ -1,9 +1,11 @@
 package com.bibliotheque.gestionbibliotheque.controllers;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.bibliotheque.gestionbibliotheque.entities.livre;
@@ -11,9 +13,9 @@ import com.bibliotheque.gestionbibliotheque.services.livreService;
 
 // @CrossOrigin("*")
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/livre")
+@RequestMapping("/api/livre")
 public class livreController {
 
     @Autowired
@@ -45,4 +47,18 @@ public class livreController {
     public List<livre> getAllLivres() {
         return livreService.findAll();
     }
+
+    @GetMapping("/{id}/disponibilite")
+    public ResponseEntity<Boolean> verifierDisponibilite(@PathVariable Long id) {
+        boolean disponible = livreService.verifierDisponibilite(id);
+        return ResponseEntity.ok(disponible);
+    }
+
+    @PutMapping("/{id}/disponibilite")
+    public ResponseEntity<Void> updateDisponibilite(@PathVariable Long id, @RequestBody Map<String, Boolean> body) {
+        boolean disponible = body.get("disponible");
+        livreService.updateDisponibiliteLivre(id, disponible);
+        return ResponseEntity.ok().build();
+    }
+
 }

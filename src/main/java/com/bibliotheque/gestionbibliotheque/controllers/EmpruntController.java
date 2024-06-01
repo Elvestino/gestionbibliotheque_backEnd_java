@@ -9,7 +9,6 @@ import com.bibliotheque.gestionbibliotheque.dto.EmpruntRequestDTO;
 import com.bibliotheque.gestionbibliotheque.entities.*;
 import com.bibliotheque.gestionbibliotheque.services.*;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,18 +46,24 @@ public class EmpruntController {
 
     @PostMapping("/save")
     public ResponseEntity<Emprunt> createEmprunt(@RequestBody EmpruntRequestDTO empruntRequest) {
+
         Optional<adherent> adherentOpt = adherentService.findById(empruntRequest.getAdherentId());
+
         Optional<livre> livreOpt = livreService.findById(empruntRequest.getLivreId());
 
         if (adherentOpt.isPresent() && livreOpt.isPresent()) {
+
             Emprunt emprunt = new Emprunt();
             emprunt.setAdherent(adherentOpt.get());
             emprunt.setLivre(livreOpt.get());
             emprunt.setJoursEmprunt(empruntRequest.getJoursEmprunt());
-
+            livre livreEntity = livreOpt.get();
+            livreEntity.setDisponible(false);
+            livreService.saveLivre(livreEntity);
             Emprunt createdEmprunt = empruntService.createEmprunt(emprunt);
             return ResponseEntity.status(HttpStatus.CREATED).body(createdEmprunt);
         } else {
+
             return ResponseEntity.badRequest().build();
         }
     }

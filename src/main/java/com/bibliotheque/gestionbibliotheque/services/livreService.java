@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.bibliotheque.gestionbibliotheque.Exception.ResourceNotFoundException;
 import com.bibliotheque.gestionbibliotheque.Repository.livreRepository;
 import com.bibliotheque.gestionbibliotheque.entities.livre;
 
@@ -23,9 +25,6 @@ public class livreService {
     }
 
     public livre updateLivre(livre livre) {
-        if (livre.getId() == null) {
-            throw new IllegalArgumentException("Le livre doit avoir un ID");
-        }
         return livreRepository.save(livre);
     }
 
@@ -35,5 +34,21 @@ public class livreService {
 
     public void deleteLivre(Long id) {
         livreRepository.deleteById(id);
+    }
+
+    public void updateDisponibiliteLivre(Long id, boolean disponible) {
+        Optional<livre> livreOpt = livreRepository.findById(id);
+        if (livreOpt.isPresent()) {
+            livre livre = livreOpt.get();
+            livre.setDisponible(disponible);
+            livreRepository.save(livre);
+        } else {
+            throw new ResourceNotFoundException("Livre not found with id " + id);
+        }
+    }
+
+    public boolean verifierDisponibilite(Long id) {
+        Optional<livre> livreOpt = livreRepository.findById(id);
+        return livreOpt.map(livre::isDisponible).orElse(false);
     }
 }

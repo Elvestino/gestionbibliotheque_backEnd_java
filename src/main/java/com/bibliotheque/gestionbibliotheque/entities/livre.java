@@ -30,6 +30,8 @@ public class livre implements Serializable {
     private String categorie;
     private String imageUrl;
 
+    private boolean disponible;
+
     @OneToMany(mappedBy = "livre")
     private Set<Emprunt> emprunts;
 
